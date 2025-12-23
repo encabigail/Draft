@@ -27,10 +27,10 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Floorbit",
                         style: TextStyle(
                           fontSize: 22,
@@ -38,11 +38,13 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Icon(Icons.person, color: Colors.orange),
-                      ),
-                    ],
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, '/profile_management'),
+                        child: const CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.person, color: Colors.orange),
+                          ),
+                      )],
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -88,7 +90,7 @@ class HomeScreen extends StatelessWidget {
               icon: Icons.calendar_month,
               title: "Book Appointment",
               subtitle: "Schedule a consultation with experts",
-              onTap: () => Navigator.pushNamed(context, '/profile_management'),
+              onTap: () => Navigator.pushNamed(context, '/book_appointment'),
             ),
             _ActionCard(
               icon: Icons.local_shipping,
