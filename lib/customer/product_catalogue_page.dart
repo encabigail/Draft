@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'product_details_page.dart';
+import 'widgets/app_bottom_nav.dart'; // <-- import reusable bottom nav
 
 class ProductCataloguePage extends StatefulWidget {
   const ProductCataloguePage({super.key});
@@ -14,7 +15,7 @@ class _ProductCataloguePageState extends State<ProductCataloguePage> {
   String selectedType = 'All';
   double maxPrice = 200;
 
-  final List<String> types = ['All', '6mm', '8.6mm', '12.6mm', 'XE'];
+  final List<String> types = ['All', '6mm', '8.6mm', '12.6mm', 'XE','Accessories'];
 
   void _showFilterDialog() {
     showDialog(
@@ -210,7 +211,7 @@ class _ProductCataloguePageState extends State<ProductCataloguePage> {
                                         fontWeight: FontWeight.bold, fontSize: 16),
                                   ),
                                 ),
-                                const SizedBox(height: 40), // space for price
+                                const SizedBox(height: 40),
                               ],
                             ),
                             Positioned(
@@ -243,6 +244,8 @@ class _ProductCataloguePageState extends State<ProductCataloguePage> {
           ),
         ],
       ),
+
+      bottomNavigationBar: const AppBottomNav(currentIndex: 0), // Products tab
     );
   }
 }

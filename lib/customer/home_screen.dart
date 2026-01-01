@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'widgets/app_bottom_nav.dart'; // make sure folder name is correct
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,9 +118,11 @@ class HomeScreen extends StatelessWidget {
 
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
-        onPressed: () => Navigator.pushNamed(context, '/cart'), // Example: if you have a cart route
+        onPressed: () => Navigator.pushNamed(context, '/cart'),
         child: const Icon(Icons.shopping_cart),
       ),
+
+      bottomNavigationBar: const AppBottomNav(currentIndex: 0), // <-- Correct
     );
   }
 }
@@ -150,7 +158,8 @@ class _ActionCard extends StatelessWidget {
             ),
             child: Icon(icon, color: Colors.orange),
           ),
-          title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(title,
+              style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(subtitle),
           trailing: const Icon(Icons.chevron_right),
           onTap: onTap,

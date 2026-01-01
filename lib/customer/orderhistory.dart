@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(
-    const MaterialApp(
-      home: TrackOrdersScreen(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
-}
+import 'widgets/app_bottom_nav.dart';
 
 class TrackOrdersScreen extends StatefulWidget {
   const TrackOrdersScreen({super.key});
@@ -17,7 +9,6 @@ class TrackOrdersScreen extends StatefulWidget {
 }
 
 class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
-  // 1. Define the data list
   final List<Map<String, dynamic>> allOrders = [
     {
       'orderID': 'FL12345678',
@@ -54,17 +45,14 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
     },
   ];
 
-  // 2. This list will hold the filtered results
   List<Map<String, dynamic>> displayedOrders = [];
 
   @override
   void initState() {
     super.initState();
-    // Initially show all orders
     displayedOrders = allOrders;
   }
 
-  // 3. The search logic
   void _runFilter(String enteredKeyword) {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
@@ -74,11 +62,11 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
           .where(
             (order) =>
                 order["orderID"].toLowerCase().contains(
-                  enteredKeyword.toLowerCase(),
-                ) ||
+                      enteredKeyword.toLowerCase(),
+                    ) ||
                 order["productName"].toLowerCase().contains(
-                  enteredKeyword.toLowerCase(),
-                ),
+                      enteredKeyword.toLowerCase(),
+                    ),
           )
           .toList();
     }
@@ -93,32 +81,24 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F8F8),
       appBar: AppBar(
-        title: const Text(
-          'Track Orders',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text('Track Orders', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.orange,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () =>
-              Navigator.of(context).pop(), // Functional Back Button
+          onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Search by Order Number',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
+            const Text('Search by Order Number',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
             const SizedBox(height: 12),
             TextField(
-              onChanged: (value) =>
-                  _runFilter(value), // Trigger filter on typing
+              onChanged: _runFilter,
               decoration: InputDecoration(
                 hintText: 'Enter order number (e.g., FL12345678)',
                 filled: true,
@@ -131,12 +111,9 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
               ),
             ),
             const SizedBox(height: 30),
-            const Text(
-              'Your Orders',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
+            const Text('Your Orders',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
             const SizedBox(height: 15),
-            // Expanded allows the list to scroll within the column
             Expanded(
               child: displayedOrders.isNotEmpty
                   ? ListView.builder(
@@ -162,11 +139,12 @@ class _TrackOrdersScreenState extends State<TrackOrdersScreen> {
           ],
         ),
       ),
+
+      bottomNavigationBar: const AppBottomNav(currentIndex: 3), // Track Orders tab
     );
   }
 }
 
-// Reusable Order Card Widget
 class OrderCard extends StatelessWidget {
   final String orderID;
   final String date;
@@ -206,26 +184,16 @@ class OrderCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Order $orderID',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
+              Text('Order $orderID',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16)),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: statusColor,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(
-                  status,
-                  style: TextStyle(color: statusTextColor, fontSize: 12),
-                ),
+                child: Text(status, style: TextStyle(color: statusTextColor, fontSize: 12)),
               ),
             ],
           ),
@@ -233,23 +201,15 @@ class OrderCard extends StatelessWidget {
           Text(date, style: const TextStyle(color: Colors.grey)),
           Text(quantity, style: const TextStyle(color: Colors.grey)),
           const SizedBox(height: 10),
-          Text(
-            productName,
-            style: const TextStyle(fontWeight: FontWeight.w500),
-          ),
+          Text(productName, style: const TextStyle(fontWeight: FontWeight.w500)),
           const Divider(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(footerLabel, style: const TextStyle(color: Colors.grey)),
-              Text(
-                price,
-                style: const TextStyle(
-                  color: Colors.orange,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
+              Text(price,
+                  style: const TextStyle(
+                      color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 16)),
             ],
           ),
         ],

@@ -96,9 +96,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   .toList(),
             ),
             const SizedBox(height: 8),
-            Text(productData!['price'],
-                style: const TextStyle(
-                    color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 28)),
+            Text(
+              'RM ${productData!['price']}', 
+              style: const TextStyle(
+                  color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 28),
+            ),
             const SizedBox(height: 12),
             Container(
               width: double.infinity,

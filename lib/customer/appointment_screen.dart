@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'book_appointment_screen.dart';
 import 'view_appointment_screen.dart';
+import 'widgets/app_bottom_nav.dart'; // <-- import the reusable bottom nav
 
 class AppointmentMenuScreen extends StatelessWidget {
   const AppointmentMenuScreen({super.key});
@@ -27,6 +28,9 @@ class AppointmentMenuScreen extends StatelessWidget {
           ),
         ],
       ),
+
+      bottomNavigationBar: const AppBottomNav(currentIndex: 2), 
+      // index 2 = Appointments tab
     );
   }
 }
