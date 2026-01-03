@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'widgets/app_bottom_nav.dart'; // make sure folder name is correct
+import 'widgets/app_bottom_nav.dart'; 
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

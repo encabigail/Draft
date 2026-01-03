@@ -26,81 +26,161 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Checkout")),
-      body: Padding(
+      appBar: AppBar(
+        title: const Text(
+          "Checkout",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.orange,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(12),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text("Order Summary", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              ...cart.items.map((item) => ListTile(
-                    title: Text(item.product.name),
-                    subtitle: Text("Color: ${item.selectedColor} x${item.quantity}"),
-                    trailing: Text("RM ${item.totalPrice.toStringAsFixed(2)}"),
-                  )),
-              const Divider(),
-              Text("Total: RM ${cart.totalAmount.toStringAsFixed(2)}",
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 12),
-              const Text("Payment Info", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: cardNumberController,
-                      decoration: const InputDecoration(labelText: "Card Number"),
-                      keyboardType: TextInputType.number,
-                      validator: (val) => val == null || val.isEmpty ? "Enter card number" : null,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Order Summary
+            const Text(
+              "Order Summary",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            ...cart.items.map(
+              (item) => Card(
+                elevation: 1,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                margin: const EdgeInsets.symmetric(vertical: 6),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(12),
+                  title: Text(
+                    item.product.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    "Color: ${item.selectedColor}\nQuantity: ${item.quantity}",
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  trailing: Text(
+                    "RM ${item.totalPrice.toStringAsFixed(2)}",
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+            const Divider(thickness: 1.2),
+            Text(
+              "Total: RM ${cart.totalAmount.toStringAsFixed(2)}",
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.right,
+            ),
+            const SizedBox(height: 20),
+
+            // Payment Info
+            const Text(
+              "Payment Info",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: cardNumberController,
+                    decoration: const InputDecoration(
+                      labelText: "Card Number",
+                      border: OutlineInputBorder(),
                     ),
-                    TextFormField(
-                      controller: cardHolderController,
-                      decoration: const InputDecoration(labelText: "Cardholder Name"),
-                      validator: (val) => val == null || val.isEmpty ? "Enter cardholder name" : null,
+                    keyboardType: TextInputType.number,
+                    validator: (val) =>
+                        val == null || val.isEmpty ? "Enter card number" : null,
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: cardHolderController,
+                    decoration: const InputDecoration(
+                      labelText: "Cardholder Name",
+                      border: OutlineInputBorder(),
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: mmController,
-                            decoration: const InputDecoration(labelText: "MM"),
-                            keyboardType: TextInputType.number,
-                            validator: (val) => val == null || val.isEmpty ? "MM" : null,
+                    validator: (val) => val == null || val.isEmpty
+                        ? "Enter cardholder name"
+                        : null,
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: mmController,
+                          decoration: const InputDecoration(
+                            labelText: "MM",
+                            border: OutlineInputBorder(),
                           ),
+                          keyboardType: TextInputType.number,
+                          validator: (val) =>
+                              val == null || val.isEmpty ? "MM" : null,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: TextFormField(
-                            controller: yyController,
-                            decoration: const InputDecoration(labelText: "YY"),
-                            keyboardType: TextInputType.number,
-                            validator: (val) => val == null || val.isEmpty ? "YY" : null,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextFormField(
+                          controller: yyController,
+                          decoration: const InputDecoration(
+                            labelText: "YY",
+                            border: OutlineInputBorder(),
                           ),
+                          keyboardType: TextInputType.number,
+                          validator: (val) =>
+                              val == null || val.isEmpty ? "YY" : null,
                         ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: TextFormField(
-                            controller: cvvController,
-                            decoration: const InputDecoration(labelText: "CVV"),
-                            keyboardType: TextInputType.number,
-                            validator: (val) => val == null || val.isEmpty ? "CVV" : null,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextFormField(
+                          controller: cvvController,
+                          decoration: const InputDecoration(
+                            labelText: "CVV",
+                            border: OutlineInputBorder(),
                           ),
+                          keyboardType: TextInputType.number,
+                          validator: (val) =>
+                              val == null || val.isEmpty ? "CVV" : null,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    isProcessing
-                        ? const CircularProgressIndicator()
-                        : ElevatedButton(
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Modern Pay Now Button
+                  isProcessing
+                      ? const Center(child: CircularProgressIndicator())
+                      : Container(
+                          margin: const EdgeInsets.symmetric(vertical: 16),
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            gradient: const LinearGradient(
+                              colors: [Color(0xFFFF9800), Color(0xFFFFB74D)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.orange.withOpacity(0.4),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: ElevatedButton(
                             onPressed: () async {
                               if (!_formKey.currentState!.validate()) return;
                               setState(() => isProcessing = true);
 
                               // Save order to Firestore
-                              final ordersRef = FirebaseFirestore.instance.collection('orders');
+                              final ordersRef =
+                                  FirebaseFirestore.instance.collection('orders');
                               await ordersRef.add({
                                 'userId': user?.uid ?? '',
                                 'items': cart.items.map((e) => e.toMap()).toList(),
@@ -119,16 +199,35 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               cart.clearCart();
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Payment successful!")));
-                              Navigator.popUntil(context, ModalRoute.withName('/home'));
+                                const SnackBar(
+                                  content: Text("Payment successful!"),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                              Navigator.popUntil(
+                                  context, ModalRoute.withName('/home'));
                             },
-                            child: const Text("Pay Now"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            child: const Text(
+                              "Pay Now",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                  ],
-                ),
+                        ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

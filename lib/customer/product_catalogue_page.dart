@@ -15,7 +15,7 @@ class _ProductCataloguePageState extends State<ProductCataloguePage> {
   String selectedType = 'All';
   double maxPrice = 200;
 
-  final List<String> types = ['All', '6mm', '8.6mm', '12.6mm', 'XE','Accessories'];
+  final List<String> types = ['All', '6mm', '8.6mm', '12.6mm', 'XE', 'Accessories'];
 
   void _showFilterDialog() {
     showDialog(
@@ -203,8 +203,7 @@ class _ProductCataloguePageState extends State<ProductCataloguePage> {
                                 ),
                                 const SizedBox(height: 8),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 8.0),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Text(
                                     productDoc['name'],
                                     style: const TextStyle(
@@ -218,8 +217,7 @@ class _ProductCataloguePageState extends State<ProductCataloguePage> {
                               bottom: 8,
                               left: 8,
                               child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 6, vertical: 4),
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                                 decoration: BoxDecoration(
                                   color: Colors.orange.shade100,
                                   borderRadius: BorderRadius.circular(6),
@@ -243,6 +241,13 @@ class _ProductCataloguePageState extends State<ProductCataloguePage> {
             ),
           ),
         ],
+      ),
+
+      // Floating cart button added here
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange,
+        onPressed: () => Navigator.pushNamed(context, '/cart'),
+        child: const Icon(Icons.shopping_cart),
       ),
 
       bottomNavigationBar: const AppBottomNav(currentIndex: 0), // Products tab
